@@ -1,40 +1,66 @@
-# pyzk
+# 🔐 pyzk - Enhanced Edition
 
 [![Build Status](https://travis-ci.org/fananimi/pyzk.svg?branch=master)](https://travis-ci.org/fananimi/pyzk)
+![Python](https://img.shields.io/badge/python-3.6%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-`pyzk` is an unofficial library of zksoftware (zkteco family) attendance machine.
+An unofficial Python library for **ZKSoftware (ZKTeco)** biometric attendance machines with enhanced features for enterprise deployment.
 
-# Installation
+## ✨ Features
 
-There is some installation method you can use below:
+### 🎯 Core Features
+- 👥 **User Management** - Create, read, update, delete users
+- 👆 **Fingerprint Templates** - Download and upload biometric data
+- 📊 **Attendance Records** - Retrieve attendance logs with timestamps
+- 🔴 **Real-time Capture** - Live attendance event monitoring
+- ⚙️ **Device Control** - Restart, shutdown, enable/disable operations
+- 🔊 **Voice Testing** - Test device audio outputs
 
-* pip
-```sh
+### 🆕 New Enhanced Features
+- ⏰ **Scheduled Polling** - Automated attendance retrieval at specific times (9am/9pm weekdays)
+- 📅 **CSV Export** - Automatic export to daily CSV files with check-in/check-out labels
+- 🔄 **Duplicate Prevention** - Smart tracking to avoid processing same records twice
+- 🌐 **Multi-Device Support** - Poll multiple devices simultaneously using threading
+- 📝 **Comprehensive Logging** - Track all polling activities with timestamps
+- 🔍 **Wireshark Integration** - Protocol dissector for network analysis
+- 📚 **Extended Documentation** - Communication protocol deep-dive and usage guides
+
+## 📋 Requirements
+
+- Python 3.6+
+- `schedule` library (for scheduled polling features)
+
+## 🚀 Installation
+
+### 📦 Via pip
+```bash
 pip install -U pyzk
+pip install schedule  # For scheduled polling features
 ```
 
-* manual installation (clone and execute)
-
-```sh
+### 🛠️ Manual Installation
+```bash
+git clone https://github.com/fananimi/pyzk.git
+cd pyzk
 python setup.py install
+pip install schedule
 ```
 
-* clone and append the path of this project
-
-```python
-import sys
-import os
-sys.path.insert(1,os.path.abspath("./pyzk"))
-from zk import ZK, const
+### 📚 For Development
+```bash
+git clone https://github.com/fananimi/pyzk.git
+cd pyzk
+pip install -r requirements.txt
 ```
 
-# Documentation
+## 📖 Documentation
 
-Complete documentation can be found at [Readthedocs](http://pyzk.readthedocs.io/en/latest/ "pyzk's readthedocs") .
+- 📘 **[Official Docs](http://pyzk.readthedocs.io/en/latest/)** - Complete API reference
+- ⏰ **[SCHEDULED_POLLING.md](SCHEDULED_POLLING.md)** - Automated attendance polling guide
+- 🌐 **[COMMUNICATION_MECHANISM.md](COMMUNICATION_MECHANISM.md)** - Protocol deep-dive & Wireshark analysis
+-# 🎯 Quick Start
 
-# API Usage
-
-Create the ZK object and you will be ready to call api.
+### Basic Connectionobject and you will be ready to call api.
 
 ## Basic Usage
 
@@ -76,14 +102,16 @@ finally:
         conn.disconnect()
 ```
 
-## Command List
+---
 
-* Connect/Disconnect
+## 📚 API Reference
+
+### 🔌 Connection Management
 
 ```python
 conn = zk.connect()
 conn.disconnect()
-```
+### 🔒 Device Lock/Unlock
 
 * Disable/Enable Connected Device
 
@@ -94,7 +122,7 @@ conn.disable_device()
 conn.enable_device()
 ```
 
-* Get and Set Time
+### ⏰ Time Management
 
 ```python
 from datetime import datetime
@@ -107,7 +135,7 @@ conn.set_time(newtime)
 ```
 
 
-* Ger Firmware Version and Extra Information
+### ℹ️ Device Information
 
 ```python
 conn.get_firmware_version()
@@ -123,7 +151,7 @@ conn.get_compat_old_firmware()
 conn.get_network_params()
 conn.get_mac()
 conn.get_pin_width()
-```
+### 💾 Storage & Capacity
 
 * Get Device Usage Space
 
@@ -138,7 +166,7 @@ conn.users_cap
 conn.fingers_cap
 # TODO: add records_cap counter
 # conn.records_cap
-```
+### 👥 User Management
 
 * User Operation
 
@@ -150,7 +178,7 @@ users = conn.get_users()
 # Delete User
 conn.delete_user(uid=1)
 conn.delete_user(user_id=123)
-```
+### 👆 Fingerprint Operation
 
 * Fingerprints
 
@@ -163,9 +191,9 @@ fingers = conn.get_templates()
 # to restore a finger, we need to assemble with the corresponding user
 # pass a User object and a list of finger (max 10) to save
 conn.save_user_template(user, [fing1 ,fing2])
-```
+### ⚡ High-Speed Bulk Transfer
 
-* High rate transfer
+Use high-rate mode for faster uploading of users and fingerprint templates:
 
 you can use the high rate mode to fasten the uploading of users and finger templates, you just need actual instances of users and fingers in a corresponding list/array.
 
@@ -179,14 +207,13 @@ conn.HR_save_usertemplates(usertemplates)
 ```
 
 
-
-
-* Remote Fingerprint Enrollment
+### 📝 Remote Fingerprint Enrollment
 ```python
 zk.enroll_user('1')
-# but it doesn't work with some tcp ZK8 devices
+# Note: May not work with some TCP ZK8 devices
 ```
 
+### 📊 Attendance Records
 
 * Attendance Record
 ```python
@@ -195,7 +222,7 @@ attendances = conn.get_attendance()
 # Clear attendances records
 conn.clear_attendance()
 ```
-
+### 🔊 Voice Testing
 * Test voice
 
 ```python
@@ -262,7 +289,7 @@ conn.test_voice(index=0) # will say 'Thank You'
 ```
 
 * Device Maintenance
-
+### 🔧
 ```python
 # DANGER!!! This command will be erase all data in the device (incuded: user, attendance report, and finger database)
 conn.clear_data()
@@ -275,27 +302,150 @@ conn.free_data()
 ```
 
 * Live Capture!
+### 🔴 Real-Time Attendance Capture
 
 ```python
-# live capture! (timeout at 10s)
+# Live capture events as they happen (timeout at 10s)
 for attendance in conn.live_capture():
     if attendance is None:
-        # implement here timeout logic
+        # implement timeout logic here
         pass
     else:
-        print (attendance) # Attendance object
+        print(attendance)  # Attendance object
 
-    #if you need to break gracefully just set
-    #   conn.end_live_capture = True
-    #
-    # On interactive mode,
-    # use Ctrl+C to break gracefully
-    # this way it restores timeout
-    # and disables live capture
+    # Break gracefully: conn.end_live_capture = True
+    # Or use Ctrl+C to stop gracefully
 ```
 
-**Test Machine**
+---
 
+## 🆕 Enhanced Features
+
+### ⏰ Scheduled Attendance Polling
+
+Automatically poll attendance at specific times (e.g., 9am check-in, 9pm check-out) and export to CSV:
+
+```python
+# example/poll_attendance_simple.py
+from zk import ZK
+import schedule
+import time
+
+def poll_and_save(attendance_type):
+    zk = ZK('192.168.1.201', port=4370)
+    conn = zk.connect()
+    attendances = conn.get_attendance()
+    # Save to CSV with check-in/check-out label
+    # Auto-deduplication and daily files
+    conn.disconnect()
+
+# Schedule weekday polls
+schedule.every().monday.at("09:00").do(poll_and_save, 'check-in')
+schedule.every().monday.at("21:00").do(poll_and_save, 'check-out')
+
+while True:
+    schedule.run_pending()
+    time.sleep(60)
+```
+
+**Features:**
+- 📅 Weekday-only scheduling (Monday-Friday)
+- 🏷️ Automatic check-in/check-out labeling
+- 📁 Daily CSV files (`attendance_YYYY-MM-DD.csv`)
+- 🔄 Duplicate prevention with persistent tracking
+- 🔁 Auto-retry on connection failures
+
+**Setup:**
+```bash
+python3 example/poll_attendance_simple.py
+```
+
+See **[SCHEDULED_POLLING.md](SCHEDULED_POLLING.md)** for complete guide including systemd service setup.
+### 💾 Backup/Restore Tool
+
+⚠️ **WARNING:** Users and fingerprints only - destructive operation!
+---
+
+### 🌐 Multi-Device Polling
+
+Poll multiple devices simultaneously using threading:
+
+```python
+# example/poll_attendance.py
+devices = [
+    ('192.168.1.201', 4370, 'Main-Office'),
+    ('192.168.1.202', 4370, 'Warehouse'),
+    ('192.168.1.203', 4370, 'Reception')
+]
+
+poll_multiple_devices(devices, interval=5)
+```
+
+Each device runs in its own thread with independent error handling and CSV output.
+
+---
+
+### 🔍 Network Protocol Analysis
+
+Included Wireshark dissector for debugging and analysis:
+
+```bash
+# Load zk6.lua in Wireshark
+**Important Notes:**
+- Serial number verification required for restore
+- Attendance data cannot be restored (only kept or cleared)
+- Make backups before any destructive operations
+
+---
+
+## 📂 Project Structure
+
+```
+pyzk/
+├── zk/                          # Core library
+│   ├── __init__.py
+│   ├── base.py                  # Main ZK class
+│   ├── attendance.py            # Attendance model
+│   ├── user.py                  # User model
+│   ├── finger.py                # Fingerprint model
+│   ├── const.py                 # Constants
+│   └── exception.py             # Custom exceptions
+├── example/                     # Example scripts
+│   ├── live_capture.py          # Real-time capture
+│   ├── poll_attendance.py       # Multi-device polling
+│   ├── poll_attendance_simple.py # Scheduled polling
+│   ├── wireshark_test.py        # Network analysis helper
+│   ├── get_users.py
+│   ├── get_device_info.py
+│   └── ... (12+ more examples)
+├── attendance_data/             # Auto-generated CSV output
+│   ├── attendance_2026-01-12.csv
+│   └── processed_records.txt
+├── docs/                        # Sphinx documentation
+├── zk6.lua                      # Wireshark protocol dissector
+├── SCHEDULED_POLLING.md         # Scheduling guide
+├── COMMUNICATION_MECHANISM.md   # Protocol documentation
+└── README.md                    # This file
+```
+
+---
+
+## 🖥️ Compatible Dcluded script
+python3 example/wireshark_test.py
+```
+
+**Filter for packet capture:**
+```
+ip.addr == 192.168.1.201 && tcp.port == 4370
+```
+
+See **[COMMUNICATION_MECHANISM.md](COMMUNICATION_MECHANISM.md)** for protocol deep-dive.
+
+---
+
+## 🛠️ Command-Line Tools
+
+### Test Machine
 ```sh
 usage: ./test_machine.py [-h] [-a ADDRESS] [-p PORT] [-T TIMEOUT] [-P PASSWORD]
                          [-f] [-t] [-r] [-u] [-l] [-D DELETEUSER] [-A ADDUSER]
@@ -337,16 +487,77 @@ optional arguments:
 
 ```sh
 usage: ./test_backup_restore.py [-h] [-a ADDRESS] [-p PORT] [-T TIMEOUT]
-                              [-P PASSWORD] [-f] [-v] [-r]
-                              [filename]
+            tested another version successfully, please open an issue or PR to update this list!
 
-ZK Basic Backup/Restore Tool
+---
 
-positional arguments:
-  filename              backup filename (default [serialnumber].bak)
+## 🗺️ Roadmap
 
-optional arguments:
-  -h, --help            show this help message and exit
+### ✅ Completed
+- ✅ Finger template downloader & uploader
+- ✅ Real-time event capture API
+- ✅ Scheduled polling with CSV export
+- ✅ Multi-device support
+- ✅ Wireshark protocol dissector
+- ✅ Enhanced documentation
+
+### 🚧 In Progress
+- 🔨 HTTP REST API wrapper
+- 🔨 Web dashboard for monitoring
+- 🔨 Database integration (PostgreSQL/MySQL)
+- 🔨 Webhook notifications
+
+### 📋 Planned
+- 📝 Docker containerization
+- 📝 GraphQL API
+- 📝 Mobile app integration
+- 📝 Cloud sync support
+- 📝 Advanced analytics & reporting
+- 📝 LDAP/Active Directory integration
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+## 🙏 Credits
+
+- **Original Author:** Fanani M. Ihsan
+- **Contributors:** See GitHub contributors list
+- **Enhanced Features:** Community contributions
+
+---
+
+## 📞 Support
+
+- 📧 **Issues:** [GitHub Issues](https://github.com/fananimi/pyzk/issues)
+- 📖 **Documentation:** [ReadTheDocs](http://pyzk.readthedocs.io/)
+- 💬 **Discussions:** [GitHub Discussions](https://github.com/fananimi/pyzk/discussions)
+
+---
+
+## ⭐ Star History
+
+If this project helped you, please consider giving it a star! ⭐
+
+---
+
+**Made with ❤️ by the Python community**   show this help message and exit
   -a ADDRESS, --address ADDRESS
                         ZK device Address [192.168.1.201]
   -p PORT, --port PORT  ZK device port [4370]

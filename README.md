@@ -1,10 +1,15 @@
-# 🔐 pyzk - Enhanced Edition
+# 🔐 pyzk - Enhanced Edition with Scheduler
 
 [![Build Status](https://travis-ci.org/fananimi/pyzk.svg?branch=master)](https://travis-ci.org/fananimi/pyzk)
 ![Python](https://img.shields.io/badge/python-3.6%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![GitHub](https://img.shields.io/badge/github-SandeepaPethangoda%2Fpyzk--with--scheduler-blue?logo=github)
 
 An unofficial Python library for **ZKSoftware (ZKTeco)** biometric attendance machines with enhanced features for enterprise deployment.
+
+**🌟 Enhanced Fork** with scheduled polling, CSV export, and multi-device support.
+
+📦 **Repository:** [github.com/SandeepaPethangoda/pyzk-with-scheduler](https://github.com/SandeepaPethangoda/pyzk-with-scheduler)
 
 ## ✨ Features
 
@@ -40,16 +45,16 @@ pip install schedule  # For scheduled polling features
 
 ### 🛠️ Manual Installation
 ```bash
-git clone https://github.com/fananimi/pyzk.git
-cd pyzk
+git clone https://github.com/SandeepaPethangoda/pyzk-with-scheduler.git
+cd pyzk-with-scheduler
 python setup.py install
 pip install schedule
 ```
 
 ### 📚 For Development
 ```bash
-git clone https://github.com/fananimi/pyzk.git
-cd pyzk
+git clone https://github.com/SandeepaPethangoda/pyzk-with-scheduler.git
+cd pyzk-with-scheduler
 pip install -r requirements.txt
 ```
 
@@ -521,7 +526,7 @@ usage: ./test_backup_restore.py [-h] [-a ADDRESS] [-p PORT] [-T TIMEOUT]
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-1. Fork the repository
+1. Fork the repository from [github.com/SandeepaPethangoda/pyzk-with-scheduler](https://github.com/SandeepaPethangoda/pyzk-with-scheduler)
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
@@ -537,17 +542,19 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Credits
 
-- **Original Author:** Fanani M. Ihsan
+- **Original Author:** Fanani M. Ihsan ([fananimi/pyzk](https://github.com/fananimi/pyzk))
+- **Enhanced Fork:** Sandeepa Pethangoda ([SandeepaPethangoda/pyzk-with-scheduler](https://github.com/SandeepaPethangoda/pyzk-with-scheduler))
 - **Contributors:** See GitHub contributors list
-- **Enhanced Features:** Community contributions
+- **Enhanced Features:** Scheduled polling, CSV export, multi-device support, protocol documentation
 
 ---
 
 ## 📞 Support
 
-- 📧 **Issues:** [GitHub Issues](https://github.com/fananimi/pyzk/issues)
-- 📖 **Documentation:** [ReadTheDocs](http://pyzk.readthedocs.io/)
-- 💬 **Discussions:** [GitHub Discussions](https://github.com/fananimi/pyzk/discussions)
+- 📧 **Issues:** [GitHub Issues](https://github.com/SandeepaPethangoda/pyzk-with-scheduler/issues)
+- 📖 **Documentation:** [ReadTheDocs](http://pyzk.readthedocs.io/) | [Repository Docs](https://github.com/SandeepaPethangoda/pyzk-with-scheduler)
+- 💬 **Discussions:** [GitHub Discussions](https://github.com/SandeepaPethangoda/pyzk-with-scheduler/discussions)
+- 🔗 **Original Project:** [fananimi/pyzk](https://github.com/fananimi/pyzk)
 
 ---
 

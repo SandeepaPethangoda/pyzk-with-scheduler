@@ -17,9 +17,9 @@ sys.path.append(ROOT_DIR)
 from zk import ZK
 
 # Configuration
-DEVICE_IP = '192.168.1.201'
-DEVICE_PORT = 4370
-CSV_DIR = os.path.join(ROOT_DIR, 'attendance_data')
+DEVICE_IP = '192.168.31.111'
+DEVICE_PORT = 4371
+CSV_DIR = os.path.join(ROOT_DIR, 'attendance_data')        
 
 # Create CSV directory if it doesn't exist
 if not os.path.exists(CSV_DIR):
@@ -179,7 +179,8 @@ def main():
     
     # Optional: Run once immediately for testing
     # Uncomment the line below to test without waiting
-    # poll_and_save('check-in')
+    poll_and_save('check-in')
+    poll_and_save('check-out')
     
     try:
         while True:
